@@ -1,38 +1,31 @@
 "use client";
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-export default function Carousel() {
-  const images = ['./slide01.jpg', './slide02.jpg', './slide03.jpg']; // replace with your images
-  const [activeIndex, setActiveIndex] = useState(0);
+const Carousel = ({ images }: { images: string[] }) => {
+  const [current, setCurrent] = useState(0);
 
-  const goNext = () => {
-    setActiveIndex((activeIndex + 1) % images.length);
+  const nextSlide = () => {
+    setCurrent(current === images.length - 1 ? 0 : current + 1);
   };
 
-  const goPrev = () => {
-    setActiveIndex((activeIndex - 1 + images.length) % images.length);
+  const prevSlide = () => {
+    setCurrent(current === 0 ? images.length - 1 : current - 1);
   };
-
-  useEffect(() => {
-    const timer = setInterval(goNext, 3000); // Change image every 3 seconds
-
-    return () => {
-      clearInterval(timer); // Clear the timer when the component is unmounted
-    };
-  }, [activeIndex]);
 
   return (
     <div className="relative w-full h-64 overflow-hidden">
       {images.map((image, index) => (
         <img
           key={index}
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute top-0 left-0 w-full h-full object-cover ${index === current ? 'block' : 'hidden'}`}
           src={image}
           alt=""
         />
       ))}
-      <button className="absolute top-0 bottom-0 left-0 w-10 bg-black bg-opacity-50 text-white" onClick={goPrev}>Prev</button>
-      <button className="absolute top-0 bottom-0 right-0 w-10 bg-black bg-opacity-50 text-white" onClick={goNext}>Next</button>
+      <button className="absolute top-0 bottom-0 left-0 w-10 bg-black bg-opacity-50 text-white" onClick={prevSlide}>Prev</button>
+      <button className="absolute top-0 bottom-0 right-0 w-10 bg-black bg-opacity-50 text-white" onClick={nextSlide}>Next</button>
     </div>
   );
-}
+};
+
+export default Carousel;
