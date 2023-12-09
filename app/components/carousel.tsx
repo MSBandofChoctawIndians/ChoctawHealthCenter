@@ -23,16 +23,16 @@ export default function Carousel() {
 
   return (
     <div className="relative w-full h-64 overflow-hidden">
-    {images.map((image, index) => (
-      <img
-        key={index}
-        className={`absolute w-full h-full object-cover transition-opacity duration-1000 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
-        src={image}
-        alt=""
-      />
-    ))}
-    <button className="absolute top-0 bottom-0 left-0 w-10 bg-black bg-opacity-50 text-white" onClick={goPrev}>Prev</button>
-    <button className="absolute top-0 bottom-0 right-0 w-10 bg-black bg-opacity-50 text-white" onClick={goNext}>Next</button>
-  </div>
+      {images.map((image, index) => (
+        <img
+          key={index}
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
+          src={image}
+          alt=""
+        />
+      ))}
+      <button className="absolute top-0 bottom-0 left-0 w-10 bg-black bg-opacity-50 text-white" onClick={goPrev}>Prev</button>
+      <button className="absolute top-0 bottom-0 right-0 w-10 bg-black bg-opacity-50 text-white" onClick={goNext}>Next</button>
+    </div>
   );
 }
